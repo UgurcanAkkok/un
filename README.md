@@ -9,4 +9,4 @@ easy to use for a cli-nerd like me, and the data should be accessible from anywh
 - Fancy things are good!
 - The user should be able to take advantage of their usual workflow, like neovim, grep etc.
 
-The project status: Just Starting™
+The project status: *Just Starting*™
