@@ -13,3 +13,7 @@ type Task struct {
 	Status  TaskStatus `json:"status"`
 	Message string     `json:"message"`
 }
+
+type Tasks struct {
+	Items []Task `json:"items"`
+}
