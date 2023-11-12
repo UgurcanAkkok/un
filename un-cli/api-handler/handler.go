@@ -13,6 +13,11 @@ type ApiHandler struct {
 	ApiEndpoint string
 }
 
+func (a *ApiHandler) Init() error {
+  // Authentication..
+  return nil
+}
+
 func (a *ApiHandler) GetTasks() (un.Tasks, error) {
 	tasksResponse := &un.Tasks{}
 
