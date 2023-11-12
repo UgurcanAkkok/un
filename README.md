@@ -27,8 +27,8 @@ Cloud backend is the backend handler which connects to the un-api for all data r
 
 ### Local Backend
 
-Local backend is the backend handler which uses an embeded database for all data related operations. The module is `storm-handler`.
-The chosen data storage solution is [Storm](https://github.com/asdine/storm) which uses the [BoltDB](https://github.com/etcd-io/bbolt) as database.
+Local backend is the backend handler which uses an embeded database for all data related operations. The module is `local-handler`.
+The chosen data storage solution is [BoltDB](https://github.com/etcd-io/bbolt) as database.
 
 ## UN-COMMON
 
