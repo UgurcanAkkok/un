@@ -2,41 +2,19 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net/http"
-  "encoding/json"
-  un "uakkok.dev/un/common"
+
+	apihandler "uakkok.dev/un/cli/api-handler"
 )
 
-
-func main(){
-  unApiHostName := "http://localhost:8080/"
-  tasksEndpoint := "tasks"
-
-  resp, err := http.Get(unApiHostName + tasksEndpoint)
-  if err != nil {
-    fmt.Println("Unable to get tasks:", err)
-    return
-  }
-  defer resp.Body.Close()
-
-  if resp.StatusCode != http.StatusOK {
-    fmt.Println("Unable to get tasks with http status code:", resp.StatusCode)
-    return
-  }
-
-  body, err := io.ReadAll(resp.Body)
-  if err != nil {
-    fmt.Println("Unable to read response body:", err)
-    return
-  }
-
-  var respTasks un.Tasks
-  if err := json.Unmarshal(body, &respTasks); err != nil {
-    fmt.Println("Unable to read body into json:", err)
-  }
-
-
-  fmt.Printf("Got the response: %v", respTasks )
-  return
+func main() {
+	api := apihandler.ApiHandler{
+		ApiEndpoint: "http://localhost:8080",
+	}
+	tasksResp, err := api.GetTasks()
+	if err != nil {
+		fmt.Println("Got error while getting tasks using api:", err)
+		return
+	}
+	fmt.Printf("First task in the list: %v", tasksResp.Items[0].Message)
+	return
 }
