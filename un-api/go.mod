@@ -1,6 +1,6 @@
 module uakkok.dev/un/api
 
-go 1.19
+go 1.21.4
 
 require (
 	github.com/labstack/echo/v4 v4.11.3
