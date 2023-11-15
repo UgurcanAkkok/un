@@ -1,11 +1,11 @@
 package main
 
 import (
-	tasks "uakkok.dev/un/common/tasks"
+	un "uakkok.dev/un/common"
 )
 
 type BackendHandler interface {
 	Init() error
-	GetTasks() (tasks.Tasks, error)
+	GetTasks() (un.Tasks, error)
 	Close() error
 }

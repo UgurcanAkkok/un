@@ -5,11 +5,11 @@ import (
 
 	apihandler "uakkok.dev/un/cli/api-handler"
 	localhandler "uakkok.dev/un/cli/local-handler"
-	"uakkok.dev/un/common/tasks"
+	un "uakkok.dev/un/common/tasks"
 )
 
 func main() {
-	var tasksResp tasks.Tasks
+	var tasksResp un.Tasks
 	var backend BackendHandler
 	backendType := "api"
 

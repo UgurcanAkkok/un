@@ -1,4 +1,4 @@
-package tasks
+package common
 
 type TaskStatus int
 

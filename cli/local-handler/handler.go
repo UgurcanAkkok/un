@@ -5,7 +5,7 @@ import (
 	"time"
 
 	bolt "go.etcd.io/bbolt"
-	"uakkok.dev/un/common/tasks"
+	un "uakkok.dev/un/common"
 )
 
 type BucketNames string
@@ -38,8 +38,8 @@ func (l *LocalHandler) Init() error {
   return nil
 }
 
-func (l *LocalHandler) GetTasks() (tasks.Tasks, error) {
-  var tasksResp tasks.Tasks
+func (l *LocalHandler) GetTasks() (un.Tasks, error) {
+  var tasksResp un.Tasks
   err := l.DB.View(func(tx *bolt.Tx) error {
     b := tx.Bucket([]byte(BucketTasks))
     c := b.Cursor()
