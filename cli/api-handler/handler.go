@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	un "uakkok.dev/un/common"
+	"uakkok.dev/un/common/tasks"
 )
 
 type ApiHandler struct {
@@ -18,8 +18,8 @@ func (a *ApiHandler) Init() error {
   return nil
 }
 
-func (a *ApiHandler) GetTasks() (un.Tasks, error) {
-	tasksResponse := &un.Tasks{}
+func (a *ApiHandler) GetTasks() (tasks.Tasks, error) {
+	tasksResponse := &tasks.Tasks{}
 
 	resp, err := http.Get(a.ApiEndpoint + "/tasks")
 	if err != nil {
