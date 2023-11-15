@@ -10,22 +10,29 @@ import (
 
 func main() {
 	var tasksResp tasks.Tasks
-	api := apihandler.ApiHandler{
-		ApiEndpoint: "http://localhost:8080",
+	var backend BackendHandler
+	backendType := "api"
+
+	switch backendType {
+	case "local":
+		backend = &localhandler.LocalHandler{LocalDBFile: "./un.db"}
+	case "api":
+		backend = &apihandler.ApiHandler{ApiEndpoint: "http://localhost:8080"}
+	default:
+		fmt.Println("Error getting the backend type")
 	}
-	tasksResp, err := api.GetTasks()
+
+	var err error
+	backend.Init()
+
 	if err != nil {
-		fmt.Println("Got error while getting tasks using api:", err)
+		fmt.Println("Failed to initalize backend: ", backendType, err)
 		return
 	}
-	fmt.Printf("Tasks: %v\n", tasksResp)
-	local := localhandler.LocalHandler{
-		LocalDBFile: "./un.db",
-	}
-  local.Init()
-	tasksResp, err = local.GetTasks()
+
+	tasksResp, err = backend.GetTasks()
 	if err != nil {
-		fmt.Println("Got error while getting tasks using local:", err)
+		fmt.Println("Failed to get tasks:", err)
 		return
 	}
 	fmt.Printf("Tasks: %v\n", tasksResp)

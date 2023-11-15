@@ -44,3 +44,8 @@ func (a *ApiHandler) GetTasks() (tasks.Tasks, error) {
 
 	return *tasksResponse, nil
 }
+
+func (a *ApiHandler) Close() error {
+  // Necessary cleanup potentially..
+  return nil
+}
