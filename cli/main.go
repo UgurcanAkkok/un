@@ -24,7 +24,7 @@ func main() {
 
 	var err error
 	backend.Init()
-  defer backend.Close()
+	defer backend.Close()
 
 	if err != nil {
 		fmt.Println("Failed to initalize backend: ", backendType, err)
@@ -42,10 +42,10 @@ func main() {
 		},
 	}
 
-  if err = backend.PostTasks(tasksData); err != nil {
-    fmt.Println("Failed to post tasks:", tasksData)
-    return
-  }
+	if err = backend.PostTasks(tasksData); err != nil {
+		fmt.Println("Failed to post tasks:", tasksData)
+		return
+	}
 	tasksResp, err = backend.GetTasks()
 	if err != nil {
 		fmt.Println("Failed to get tasks:", err)

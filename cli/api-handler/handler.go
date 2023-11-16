@@ -14,8 +14,8 @@ type ApiHandler struct {
 }
 
 func (a *ApiHandler) Init() error {
-  // Authentication..
-  return nil
+	// Authentication..
+	return nil
 }
 
 func (a *ApiHandler) GetTasks() (un.Tasks, error) {
@@ -46,11 +46,11 @@ func (a *ApiHandler) GetTasks() (un.Tasks, error) {
 }
 
 func (a *ApiHandler) PostTasks(un.Tasks) error {
-  // TODO: Implement this
-  return nil
+	// TODO: Implement this
+	return nil
 }
 
 func (a *ApiHandler) Close() error {
-  // Necessary cleanup potentially..
-  return nil
+	// Necessary cleanup potentially..
+	return nil
 }
