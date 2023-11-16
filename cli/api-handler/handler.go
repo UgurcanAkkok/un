@@ -45,6 +45,11 @@ func (a *ApiHandler) GetTasks() (un.Tasks, error) {
 	return *tasksResponse, nil
 }
 
+func (a *ApiHandler) PostTasks(un.Tasks) error {
+  // TODO: Implement this
+  return nil
+}
+
 func (a *ApiHandler) Close() error {
   // Necessary cleanup potentially..
   return nil

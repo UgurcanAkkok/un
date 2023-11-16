@@ -7,5 +7,6 @@ import (
 type BackendHandler interface {
 	Init() error
 	GetTasks() (un.Tasks, error)
+  PostTasks(un.Tasks) error
 	Close() error
 }
