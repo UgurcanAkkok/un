@@ -3,21 +3,21 @@ package main
 import (
 	"fmt"
 
-	apihandler "uakkok.dev/un/cli/api-handler"
-	localhandler "uakkok.dev/un/cli/local-handler"
+	api "uakkok.dev/un/cli/api-handler"
+	embedded "uakkok.dev/un/cli/embedded-handler"
 	un "uakkok.dev/un/common"
 )
 
 func main() {
 	var tasksResp un.Tasks
 	var backend BackendHandler
-	backendType := "local"
+	backendType := "embedded"
 
 	switch backendType {
-	case "local":
-		backend = &localhandler.LocalHandler{LocalDBFile: "./un.db"}
+	case "embedded":
+		backend = &embedded.EmbeddedHandler{LocalDBFile: "./un.db"}
 	case "api":
-		backend = &apihandler.ApiHandler{ApiEndpoint: "http://localhost:8080"}
+		backend = &api.ApiHandler{ApiEndpoint: "http://localhost:8080"}
 	default:
 		fmt.Println("Error getting the backend type")
 	}

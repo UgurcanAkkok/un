@@ -19,15 +19,15 @@ Current plan is: Cloud Run + Firestore
 
 ## UN-CLI
 
-UN-CLI is the cli application for the end-user. Depending on the configuration, it will use the cloud backend or local backend.
+UN-CLI is the cli application for the end-user. Depending on the configuration, it will use the cloud backend or embedded backend.
 
 ### Cloud Backend
 
 Cloud backend is the backend handler which connects to the un-api for all data related operations. The module is `api-handler`.
 
-### Local Backend
+### Embedded Backend
 
-Local backend is the backend handler which uses an embeded database for all data related operations. The module is `local-handler`.
+Embedded backend is the backend handler which uses an embedded database for all data related operations. The module is `embedded-handler`.
 The chosen data storage solution is [BoltDB](https://github.com/etcd-io/bbolt) as database.
 
 ## UN-COMMON

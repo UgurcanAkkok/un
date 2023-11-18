@@ -1,4 +1,4 @@
-package localhandler
+package embeddedhandler
 
 import (
 	"bytes"
@@ -16,12 +16,12 @@ const (
 	BucketTasks BucketNames = "tasks"
 )
 
-type LocalHandler struct {
+type EmbeddedHandler struct {
 	LocalDBFile string
 	DB          *bolt.DB
 }
 
-func (l *LocalHandler) Init() error {
+func (l *EmbeddedHandler) Init() error {
 	db, err := bolt.Open(l.LocalDBFile, 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		return fmt.Errorf("Failed to open db: %w", err)
@@ -41,7 +41,7 @@ func (l *LocalHandler) Init() error {
 	return nil
 }
 
-func (l *LocalHandler) GetTasks() (un.Tasks, error) {
+func (l *EmbeddedHandler) GetTasks() (un.Tasks, error) {
 	var tasksResp un.Tasks
 	tasksResp = un.Tasks{Items: []un.Task{}}
 	err := l.DB.View(func(tx *bolt.Tx) error {
@@ -73,7 +73,7 @@ func (l *LocalHandler) GetTasks() (un.Tasks, error) {
 	return tasksResp, nil
 }
 
-func (l *LocalHandler) PostTasks(tasksData un.Tasks) error {
+func (l *EmbeddedHandler) PostTasks(tasksData un.Tasks) error {
 	err := l.DB.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(BucketTasks))
 		for _, v := range tasksData.Items {
@@ -95,7 +95,7 @@ func (l *LocalHandler) PostTasks(tasksData un.Tasks) error {
 	return nil
 }
 
-func (l *LocalHandler) Close() error {
+func (l *EmbeddedHandler) Close() error {
 	if err := l.DB.Close(); err != nil {
 		return fmt.Errorf("Error closing DB connection: %w", err)
 	}
