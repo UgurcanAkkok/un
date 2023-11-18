@@ -1,4 +1,4 @@
-package main
+package backendhandler
 
 import (
 	un "uakkok.dev/un/common"
