@@ -14,6 +14,8 @@ type Task struct {
 	Message string     `json:"message"`
 }
 
+const UnsetTaskID int = -1
+
 type Tasks struct {
 	Items []Task `json:"items"`
 }

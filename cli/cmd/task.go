@@ -45,6 +45,7 @@ func taskAddRun(cmd *cobra.Command, args []string) {
 				fmt.Println("Cant add empty task, skipping it")
 			} else {
 				task := un.Task{
+					ID:      un.UnsetTaskID,
 					Status:  un.TaskStatusOpen,
 					Message: m,
 				}
@@ -53,6 +54,13 @@ func taskAddRun(cmd *cobra.Command, args []string) {
 		}
 		backend.PostTasks(tasksData)
 	}
+}
+
+func init() {
+	taskCmd.AddCommand(taskAddCmd)
+	taskCmd.AddCommand(taskListCmd)
+	taskAddCmd.Flags().StringArrayP("message", "m", []string{""}, "Task message")
+	taskAddCmd.MarkFlagRequired("message")
 }
 
 var taskCmd = &cobra.Command{
@@ -86,13 +94,6 @@ var taskCmd = &cobra.Command{
 		backend := backendValue.(backendhandler.BackendHandler)
 		backend.Close()
 	},
-}
-
-func init() {
-	taskCmd.AddCommand(taskAddCmd)
-	taskCmd.AddCommand(taskListCmd)
-	taskAddCmd.Flags().StringArrayP("message", "m", []string{""}, "Task message")
-	taskAddCmd.MarkFlagRequired("message")
 }
 
 var taskAddCmd = &cobra.Command{

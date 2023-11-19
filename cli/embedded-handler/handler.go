@@ -68,15 +68,20 @@ func (l *EmbeddedHandler) PostTasks(tasksData un.Tasks) error {
 	err := l.DB.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(BucketTasks))
 		for _, v := range tasksData.Items {
-			// This returns an error only if the Tx is closed or not writeable.
-			// That can't happen in an Update() call so I ignore the error check.
-			id, _ := b.NextSequence()
-			idBytes, err := atob(int(id))
+			var id int
+			// If the id is UnsetTaskID, get the next id from db
+			if v.ID == un.UnsetTaskID {
+				id_uint64, _ := b.NextSequence()
+				id = int(id_uint64)
+				v.ID = id
+			} else {
+				// We will use this for idBytes
+				id = v.ID
+			}
+			idBytes, err := atob(id)
 			if err != nil {
 				return fmt.Errorf("Failed to convert id to bytes: %w", err)
 			}
-
-			v.ID = int(id)
 			tasksBytes, err := atob(v)
 			if err != nil {
 				return fmt.Errorf("Failed to convert task to bytes: %w", err)
@@ -106,4 +111,3 @@ func atob(value any) ([]byte, error) {
 	}
 	return buffer.Bytes(), nil
 }
-
