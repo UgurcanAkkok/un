@@ -73,12 +73,13 @@ func (l *EmbeddedHandler) PostTasks(tasksData un.Tasks) error {
 			id, _ := b.NextSequence()
 			idBytes, err := atob(int(id))
 			if err != nil {
-				return err
+				return fmt.Errorf("Failed to convert id to bytes: %w", err)
 			}
+
 			v.ID = int(id)
 			tasksBytes, err := atob(v)
 			if err != nil {
-				return err
+				return fmt.Errorf("Failed to convert task to bytes: %w", err)
 			}
 			b.Put(idBytes, tasksBytes)
 		}

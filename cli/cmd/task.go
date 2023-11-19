@@ -26,7 +26,7 @@ func taskListRun(cmd *cobra.Command, args []string) {
 	// Get the backend value from context and type assert to BackendHandler
 	backend := cmd.Context().Value(ContextKey("backend")).(backendhandler.BackendHandler)
 	if tasksResp, err := backend.GetTasks(); err != nil {
-		fmt.Println("Failed to get tasks:", err)
+		fmt.Println("Failed to list tasks:", err)
 		return
 	} else {
 		fmt.Printf("Tasks: %v\n", tasksResp)
