@@ -49,18 +49,9 @@ func (l *EmbeddedHandler) GetTasks() (un.Tasks, error) {
 		c := b.Cursor()
 
 		for k, v := c.First(); k != nil; k, v = c.Next() {
-			var id int
 			var task un.Task
-			var err error
-			idBuffer := bytes.NewBuffer(k)
-			dec := gob.NewDecoder(idBuffer)
-			if err = dec.Decode(&id); err != nil {
-				return fmt.Errorf("Failed to decode to int value: %w", err)
-			}
-			taskBuffer := bytes.NewBuffer(v)
-			dec = gob.NewDecoder(taskBuffer)
-			if err = dec.Decode(&task); err != nil {
-				return fmt.Errorf("Failed to decode to Task value: %w", err)
+			if err := gob.NewDecoder(bytes.NewBuffer(v)).Decode(&task); err != nil {
+				return fmt.Errorf("Failed to decode task from byte to Task: %w", err)
 			}
 			tasksResp.Items = append(tasksResp.Items, task)
 		}
@@ -115,12 +106,3 @@ func atob(value any) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-func btoTask(b []byte) (un.Task, error) {
-	buffer := bytes.NewBuffer(b)
-	var result un.Task
-	dec := gob.NewDecoder(buffer)
-	if err := dec.Decode(&result); err != nil {
-		return result, fmt.Errorf("Failed to decode value: %w", err)
-	}
-	return result, nil
-}
