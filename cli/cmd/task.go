@@ -70,9 +70,9 @@ func init() {
 	taskCmd.AddCommand(taskAddCmd)
 	taskCmd.AddCommand(taskRemoveCmd)
 	taskCmd.AddCommand(taskListCmd)
-	taskAddCmd.Flags().StringArrayP("message", "m", []string{""}, "Task message")
+	taskAddCmd.Flags().StringArrayP("message", "m", []string{}, "Task message")
 	taskAddCmd.MarkFlagRequired("message")
-	taskRemoveCmd.Flags().IntSliceP("id", "i", []int{un.UnsetTaskID}, "Task IDs to remove")
+	taskRemoveCmd.Flags().IntSliceP("id", "i", []int{}, "Task IDs to remove")
 	taskRemoveCmd.MarkFlagRequired("id")
 }
 
