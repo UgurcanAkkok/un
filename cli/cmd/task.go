@@ -33,6 +33,16 @@ func taskListRun(cmd *cobra.Command, args []string) {
 	}
 }
 
+func taskRemoveRun(cmd *cobra.Command, args []string) {
+	// Get the backend value from context and type assert to BackendHandler
+	backend := cmd.Context().Value(ContextKey("backend")).(backendhandler.BackendHandler)
+	ids, err := cmd.Flags().GetIntSlice("id")
+	if err != nil {
+		fmt.Println("Error getting task ids to remove.")
+	}
+	backend.DeleteTasks(ids)
+}
+
 func taskAddRun(cmd *cobra.Command, args []string) {
 	// Get the backend value from context and type assert to BackendHandler
 	backend := cmd.Context().Value(ContextKey("backend")).(backendhandler.BackendHandler)
@@ -58,9 +68,12 @@ func taskAddRun(cmd *cobra.Command, args []string) {
 
 func init() {
 	taskCmd.AddCommand(taskAddCmd)
+	taskCmd.AddCommand(taskRemoveCmd)
 	taskCmd.AddCommand(taskListCmd)
 	taskAddCmd.Flags().StringArrayP("message", "m", []string{""}, "Task message")
 	taskAddCmd.MarkFlagRequired("message")
+	taskRemoveCmd.Flags().IntSliceP("id", "i", []int{un.UnsetTaskID}, "Task IDs to remove")
+	taskRemoveCmd.MarkFlagRequired("id")
 }
 
 var taskCmd = &cobra.Command{
@@ -94,6 +107,12 @@ var taskCmd = &cobra.Command{
 		backend := backendValue.(backendhandler.BackendHandler)
 		backend.Close()
 	},
+}
+
+var taskRemoveCmd = &cobra.Command{
+	Use:     "remove",
+	Run:     taskRemoveRun,
+	Aliases: []string{"r"},
 }
 
 var taskAddCmd = &cobra.Command{

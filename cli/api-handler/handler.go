@@ -50,6 +50,11 @@ func (a *ApiHandler) PostTasks(un.Tasks) error {
 	return nil
 }
 
+func (a *ApiHandler) DeleteTasks(ids []int) error {
+	// TODO: Implement this
+	return nil
+}
+
 func (a *ApiHandler) Close() error {
 	// Necessary cleanup potentially..
 	return nil

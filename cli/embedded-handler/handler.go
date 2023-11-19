@@ -96,6 +96,24 @@ func (l *EmbeddedHandler) PostTasks(tasksData un.Tasks) error {
 	return nil
 }
 
+func (l *EmbeddedHandler) DeleteTasks(ids []int) error {
+	err := l.DB.Update(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte(BucketTasks))
+		for _, v := range ids {
+			idBytes, err := atob(v)
+			if err != nil {
+				return fmt.Errorf("Failed to read task id into bytes: %w", err)
+			}
+			b.Delete([]byte(idBytes))
+		}
+		return nil
+	})
+	if err != nil {
+		return fmt.Errorf("Failed to put tasks: %w", err)
+	}
+	return nil
+}
+
 func (l *EmbeddedHandler) Close() error {
 	if err := l.DB.Close(); err != nil {
 		return fmt.Errorf("Error closing DB connection: %w", err)
