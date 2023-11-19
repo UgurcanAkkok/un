@@ -77,11 +77,15 @@ func (l *EmbeddedHandler) PostTasks(tasksData un.Tasks) error {
 	err := l.DB.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(BucketTasks))
 		for _, v := range tasksData.Items {
-			tasksBytes, err := atob(v)
+			// This returns an error only if the Tx is closed or not writeable.
+			// That can't happen in an Update() call so I ignore the error check.
+			id, _ := b.NextSequence()
+			idBytes, err := atob(int(id))
 			if err != nil {
 				return err
 			}
-			idBytes, err := atob(v.ID)
+			v.ID = int(id)
+			tasksBytes, err := atob(v)
 			if err != nil {
 				return err
 			}

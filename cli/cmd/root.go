@@ -8,7 +8,10 @@ import (
 )
 
 func rootRun(cmd *cobra.Command, args []string) {
-	fmt.Println("This is un!")
+	fmt.Println("This is Ugur's Notes!")
+	if err := cmd.Help(); err != nil {
+		fmt.Println("Error printing help on command task")
+	}
 }
 
 var rootCmd = &cobra.Command{
